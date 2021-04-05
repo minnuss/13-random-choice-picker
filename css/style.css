@@ -97,9 +97,26 @@ html {
   opacity: 0.6;
 }
 
+.random__content--btn__clear {
+  position: absolute;
+  left: 25px;
+  top: 25px;
+  background-color: #2c2c54;
+  color: #f7f1e3;
+  padding: 7px 15px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 @media (max-width: 650px) {
   .random__content {
     width: 90%;
+    height: 60rem;
     min-height: 65rem;
   }
   .random__content--title {

@@ -1,103 +1,97 @@
-const tagsEl = document.querySelector('.random__content--tags');
 const textarea = document.querySelector('.random__content--textarea');
-const btn = document.querySelector('.random__content--btn');
-
-textarea.focus();
+const spanContainer = document.querySelector('.random__content--tags');
+const btnLucky = document.querySelector('.random__content--btn');
+const btnClear = document.querySelector('.random__content--btn__clear');
 
 textarea.addEventListener('keyup', (e) => {
-    // createTags(e.target.value);
-    createTags(textarea.value);
+    // console.log(textarea.value);
+    // console.log(e.target.value)
 
-    if (e.key === 'Enter') {
-        // when enter is pressed, clear textarea nad trigger randomSelect()
-        setTimeout(() => {
-            textarea.value = ""
-        }, 500);
+    createSpan(textarea.value);
 
-        randomSelect();
+    if (e.key === "Enter") {
+        // console.log('enter')
+        pickRandom()
     }
+
 })
 
-btn.addEventListener('click', () => {
-    randomSelect();
+// LUCKY/START BUTTON 
+btnLucky.addEventListener('click', () => {
+    pickRandom()
 })
 
-function createTags(input) {
-    // console.log(input)
+// CLEAR BUTTON
+btnClear.addEventListener('click', () => {
+    textarea.value = '';
+    createSpan(inputValue = "");
+})
 
-    // taking all the inputs from textarea, split them by comma (','), then filter empty space, and finaly trim all spaces before and after
-    const tags = input.split(',')
-        .filter(tag => tag.trim() !== "")
-        .map(tag => tag.trim());
+function createSpan(inputValue) {
 
-    console.log(tags)
+    // FILTER WORDS FOR EMPTY SPACES TYPED
+    const textValue = inputValue.split(',')
+        .filter(text => text.trim() !== "")
+        .map(text => text.trim());
+    // console.log(textValue)
 
-    tagsEl.innerHTML = '';
+    // this commands delete letter by letter typed, it only let whole array words to pass through
+    spanContainer.innerHTML = "";
 
-    // from every array value, creating a span, and appending to parent
-    tags.forEach(tag => {
-        const span = document.createElement('span');
-        span.innerText = tag;
+    textValue.forEach(text => {
+        let span = document.createElement('span');
+        span.innerHTML = text;
         span.classList.add('random__content--tags__tag')
-        tagsEl.appendChild(span);
-    })
-
-    // JUST A FOR LOOP, SAME METHOD AS ABOVE
-    // for (let i = 0; i < tags.length; i++) {
-    //     const span = document.createElement('span');
-    //     span.innerHTML = tags[i];
-    //     span.classList.add('random__content--tags__tag');
-    //     tagsEl.appendChild(span);
-    // }
+        spanContainer.appendChild(span);
+    });
 }
 
-function randomSelect() {
+function pickRandom() {
 
-    // check to see, if span array is empty, if it is, just return from function, it not, proceed
+    // CHECK TO SEE IF THERE IS AT LEAST TWO ENTERED CHOICES
     if (document.querySelectorAll('.random__content--tags__tag').length < 2) {
-        textarea.value = '';
-        tagsEl.innerHTML = '';
-        alert('Needs to be two choices minimum for program to work')
+        alert('There needs to be at least two choices entered')
         return
-    };
+    }
 
-    // time duration in ms, in which a program will pick a random span/tag
-    const times = 3000;
-
+    // INTERVAL FOR HIGHLIGHT/UNHIGHLIGHT SPAN'S
     const interval = setInterval(() => {
+        let randomSpan = chooseRandomSpan();
 
-        // creating randomSpan argument, from function
-        const randomSpan = pickRandomSpan();
-        // highlighting a span
         highlightSpan(randomSpan);
 
-        // Un-highlighting a span
         setTimeout(() => {
             unHighlightSpan(randomSpan);
-        }, 100)
+        }, 100);
+    }, 100);
 
-    }, 100)
+    // STOPING INTERVAL AFTER DEFINED TIME
+    let time = 3000;
 
-    // stopping the selection and higlighting
     setTimeout(() => {
         clearInterval(interval);
+
         setTimeout(() => {
-            const randomSpan = pickRandomSpan();
+            let randomSpan = chooseRandomSpan();
             highlightSpan(randomSpan);
-        }, 100);
-    }, times)
-}
-// pick random span from nodelist-array
-function pickRandomSpan() {
-    let spans = document.querySelectorAll('.random__content--tags__tag');
-    return spans[Math.floor(Math.random() * spans.length)];
+        }, 200);
+
+    }, time);
 }
 
-function highlightSpan(span) {
-    span.classList.add('highlight');
+// CHOOSE A RANDOM SPAN ELEMENT
+function chooseRandomSpan() {
+    const allSpans = document.querySelectorAll('.random__content--tags__tag');
+    return allSpans[Math.floor(Math.random() * allSpans.length)];
 }
 
-function unHighlightSpan(span) {
-    span.classList.remove('highlight');
+// HIGHLIGHT SPAN WITH CLASS
+function highlightSpan(randomSpan) {
+    randomSpan.classList.add('highlight');
+}
+
+// UNHIGHLIGHT SPAN
+function unHighlightSpan(randomSpan) {
+    randomSpan.classList.remove('highlight');
 }
 
