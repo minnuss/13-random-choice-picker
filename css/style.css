@@ -21,7 +21,7 @@ html {
 
 .random__content {
   background-color: #218c74;
-  height: 55rem;
+  height: 70rem;
   width: 60rem;
   border-radius: 8px;
   position: relative;
@@ -116,7 +116,6 @@ html {
 @media (max-width: 650px) {
   .random__content {
     width: 90%;
-    height: 60rem;
     min-height: 65rem;
   }
   .random__content--title {
