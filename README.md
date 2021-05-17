@@ -2,7 +2,8 @@
 
 TITLE - Random Choice Picker
 
-About - Random Choice Picker
+About - Enter values that you want to be randomly choosed between, like, names or numbers.
+Values needs to be separated with 'comma / , '.
 
 TECHNOLOGIES USED:
 
